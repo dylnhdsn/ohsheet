@@ -78,10 +78,14 @@ export const Cell: React.FC<CellProps> = ({
 
   useEffect(() => {
     if (cellData.operands) {
-      cellData.value = calculateFormula(cellData.operands);
-      onChange(cellData);
+      const newValue = calculateFormula(cellData.operands);
+      if (cellData.value !== newValue) {
+        onChange({ ...cellData, value: newValue  });
+      }
     }
-  }, [sheetData, cellData, calculateFormula, onChange]);
+
+  }, [calculateFormula, cellData, onChange]);
+
 
   return (
     <td onClick={handleCellClick}>
