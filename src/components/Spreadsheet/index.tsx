@@ -16,7 +16,7 @@ const Spreadsheet: React.FC = () => {
 
   const columnHeaders: JSX.Element[] = [];
   for (let i = 0; i < COLUMNS; i++) {
-    columnHeaders.push(<td>{String.fromCharCode('A'.charCodeAt(0) + i)}</td>)
+    columnHeaders.push(<td key={i}>{String.fromCharCode('A'.charCodeAt(0) + i)}</td>)
   }
 
   const handleCellChange = (cellData: CellData) => {
