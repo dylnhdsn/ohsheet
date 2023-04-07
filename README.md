@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+```
+  ________  ___  ___  ________  ___  ___  _______   _______  _________
+ |\   __  \|\  \|\  \|\   ____\|\  \|\  \|\  ___ \ |\  ___ \|\___   ___\
+ \ \  \|\  \ \  \\\  \ \  \___|\ \  \\\  \ \   __/|\ \   __/\|___ \  \_|
+  \ \  \\\  \ \   __  \ \_____  \ \   __  \ \  \_|/_\ \  \_|/__  \ \  \
+   \ \  \\\  \ \  \ \  \|____|\  \ \  \ \  \ \  \_|\ \ \  \_|\ \  \ \  \
+    \ \_______\ \__\ \__\____\_\  \ \__\ \__\ \_______\ \_______\  \ \__\
+     \|_______|\|__|\|__|\_________\|__|\|__|\|_______|\|_______|   \|__|
+                        \|_________|
+```
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a spreadsheet application built with React that implements the following features:
 
-## Available Scripts
+- The spreadsheet has 15 rows and 15 columns.
+- Each cell in the spreadsheet can accept input in the form of a numeric string or a formula string.
+- Numeric strings will only have integers, and formula strings will only include references to other cells in the form of cell addresses, such as "A1", and the "+" operator.
+- When a formula cell is rendered, it shows the sum of its operands.
+- The application updates the formula cells reactively when their operands change.
 
-In the project directory, you can run:
+## Technical Decisions
 
-### `npm start`
+The interesting pieces of logic in this solution are in the `Cell` component. The component uses `useState`, `useEffect`, and `useCallback` hooks to manage its state and update the cell's data.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The `calculateFormula` function uses `sheetData` state to calculate the sum of a cell's operands when its value changes. The function is memoized with `useCallback` to prevent unnecessary re-renders.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The `handleInputKeyDown` function is responsible for updating the cell's data when the user presses `Enter` or `Escape`. The function parses the input value and updates the cell's value or formula based on the input string.
 
-### `npm test`
+The `useEffect` hook is used to update the cell's value whenever its operands change. The hook watches the `sheetData`, `cellData`, and `calculateFormula` dependencies and updates the cell's data using the `onChange` function when the value changes.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Additional Features and Enhancements
 
-### `npm run build`
+If given additional time and the above mentioned limitations were removed, some additional features and enhancements that could be implemented include:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Support for more complex formulas with other mathematical operators like `-`, `*`, `/`, and `SUM`.
+- Support for range selection in formulas, such as `=SUM(A1:A3)`.
+- Error handling for invalid input and circular references.
+- Support for adding and removing rows and columns dynamically.
+- Support for importing and exporting spreadsheet data in various formats.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Execution Instructions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To run the spreadsheet application, follow these steps:
 
-### `npm run eject`
+1. Clone the repository to your local machine.
+2. Open the project directory in your terminal and run `npm install` to install the dependencies.
+3. Run `npm start` to start the application.
+4. Open your browser and navigate to `http://localhost:3000` to use the application.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
